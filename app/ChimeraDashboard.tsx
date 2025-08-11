@@ -7,6 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
+import { useBotControl } from "@/hooks/use-bot-control"
+import { BotControlPanel } from "@/components/BotControlPanel"
 import {
   Cpu,
   HardDrive,
@@ -30,6 +34,10 @@ import {
   RefreshCw,
   Menu,
   X,
+  Bot,
+  MessageSquare,
+  Users,
+  Brain,
 } from "lucide-react"
 
 // Types
@@ -350,6 +358,9 @@ export default function ChimeraDashboard() {
   const [showSettings, setShowSettings] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+
+  // Bot control hook
+  const botControl = useBotControl()
 
   const [settings, setSettings] = useState({
     theme: "dark",
@@ -1079,6 +1090,9 @@ export default function ChimeraDashboard() {
               </CardContent>
             </Card>
 
+            {/* Mobile Bot Control Panel */}
+            <BotControlPanel isMobile={true} />
+
             {/* Mobile Alerts */}
             <Card className="bg-black/80 border-gold/30 shadow-xl shadow-gold/10">
               <CardHeader className="pb-3">
@@ -1551,6 +1565,11 @@ export default function ChimeraDashboard() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Desktop Bot Control Panel */}
+            <div className="lg:col-span-2">
+              <BotControlPanel isMobile={false} />
             </div>
           </div>
         )}
