@@ -2,8 +2,6 @@
 
 import type React from "react"
 import { useState, useEffect, useRef, useMemo, useCallback } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import * as THREE from "three"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -214,82 +212,35 @@ function LoginInterface({ onLogin }: { onLogin: () => void }) {
   )
 }
 
-// Enhanced 3D Visualization with Gold/Red/Pink theme
+// Simple 2D System Visualization
 function SystemVisualization({ status, metrics }: { status: SystemStatus; metrics: SystemMetrics }) {
-  const sphereRef = useRef<THREE.Mesh>(null)
-  const ringsRef = useRef<THREE.Group>(null)
+  const statusConfig = {
+    offline: { color: "#64748b", bgColor: "bg-gray-800", label: "OFFLINE" },
+    online: { color: "#ffd700", bgColor: "bg-green-900", label: "ONLINE" },
+    warning: { color: "#ff6b35", bgColor: "bg-yellow-900", label: "WARNING" },
+    critical: { color: "#ff1493", bgColor: "bg-red-900", label: "CRITICAL" },
+  }
 
-  const statusConfig = useMemo(
-    () => ({
-      offline: { color: 0x64748b, intensity: 0.1, speed: 0.5 },
-      online: { color: 0xffd700, intensity: 0.6, speed: 1.0 },
-      warning: { color: 0xff6b35, intensity: 0.8, speed: 1.5 },
-      critical: { color: 0xff1493, intensity: 1.0, speed: 2.0 },
-    }),
-    [],
-  )
-
-  useFrame((state) => {
-    if (!sphereRef.current || !ringsRef.current) return
-
-    const time = state.clock.elapsedTime
-    const config = statusConfig[status]
-
-    // Core rotation and pulsing
-    sphereRef.current.rotation.y += 0.01 * config.speed
-    ringsRef.current.rotation.z += 0.005 * config.speed
-
-    // Dynamic scaling based on power level
-    const scale = 1 + (metrics.powerLevel / 100) * 0.3 + Math.sin(time * config.speed) * 0.1
-    sphereRef.current.scale.setScalar(scale)
-
-    // Update material properties
-    const material = sphereRef.current.material as THREE.MeshStandardMaterial
-    material.emissive.setHex(config.color)
-    material.emissiveIntensity = config.intensity * (metrics.powerLevel / 100)
-
-    // Update ring materials
-    ringsRef.current.children.forEach((ring, index) => {
-      const ringMaterial = (ring as THREE.Mesh).material as THREE.MeshBasicMaterial
-      ringMaterial.opacity = 0.3 + (metrics.powerLevel / 100) * 0.4 + Math.sin(time + index) * 0.1
-    })
-  })
+  const config = statusConfig[status]
 
   return (
-    <>
-      <ambientLight intensity={0.4} />
-      <pointLight position={[5, 5, 5]} intensity={1.2} color="#ffd700" />
-      <pointLight position={[-5, -5, 5]} intensity={0.8} color="#ff6b35" />
-      <pointLight position={[0, 5, -5]} intensity={0.6} color="#ff1493" />
-
-      {/* Main core sphere */}
-      <mesh ref={sphereRef}>
-        <sphereGeometry args={[1.2, 32, 32]} />
-        <meshStandardMaterial
-          color="#1a1a1a"
-          emissive={statusConfig[status].color}
-          emissiveIntensity={statusConfig[status].intensity}
-          metalness={0.8}
-          roughness={0.2}
+    <div className="relative w-full h-full flex items-center justify-center">
+      <div className={`w-32 h-32 rounded-full ${config.bgColor} border-4 border-gold/30 flex items-center justify-center animate-pulse`}>
+        <div 
+          className="w-20 h-20 rounded-full border-4 animate-spin"
+          style={{ 
+            borderColor: config.color,
+            borderTopColor: 'transparent',
+            animationDuration: status === 'critical' ? '0.5s' : status === 'warning' ? '1s' : '2s'
+          }}
         />
-      </mesh>
-
-      {/* Energy rings */}
-      <group ref={ringsRef}>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[1.8, 2.0, 32]} />
-          <meshBasicMaterial color="#ffd700" transparent opacity={0.4} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh rotation={[0, Math.PI / 2, 0]}>
-          <ringGeometry args={[2.2, 2.4, 32]} />
-          <meshBasicMaterial color="#ff6b35" transparent opacity={0.3} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-          <ringGeometry args={[2.6, 2.8, 32]} />
-          <meshBasicMaterial color="#ff1493" transparent opacity={0.2} side={THREE.DoubleSide} />
-        </mesh>
-      </group>
-    </>
+      </div>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+        <Badge className={`${config.bgColor} text-white border-gold/30 font-bold`}>
+          {config.label}
+        </Badge>
+      </div>
+    </div>
   )
 }
 
@@ -953,9 +904,7 @@ export default function ChimeraDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="h-48 relative">
-                <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-                  <SystemVisualization status={systemStatus} metrics={metrics} />
-                </Canvas>
+                <SystemVisualization status={systemStatus} metrics={metrics} />
 
                 {/* Mobile Indicators */}
                 <div className="absolute top-2 right-2">
@@ -1375,9 +1324,7 @@ export default function ChimeraDashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="h-80 relative">
-                  <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-                    <SystemVisualization status={systemStatus} metrics={metrics} />
-                  </Canvas>
+                  <SystemVisualization status={systemStatus} metrics={metrics} />
 
                   {/* Power Level Indicator */}
                   <div className="absolute top-4 right-4">
