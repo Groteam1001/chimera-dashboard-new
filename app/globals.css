@@ -1,0 +1,460 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 45 100% 50% / 0.2;
+    --input: 45 100% 50% / 0.3;
+    --ring: 45 100% 50%;
+    --radius: 0.75rem;
+    --gold: #ffd700;
+    --red: #ff6b35;
+    --pink: #ff1493;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    background: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ffd700, #ff1493);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ffed4e, #ff69b4);
+}
+
+/* Glow Effects */
+.glow-gold {
+  text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+}
+
+.glow-red {
+  text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35, 0 0 30px #ff6b35;
+}
+
+.glow-pink {
+  text-shadow: 0 0 10px #ff1493, 0 0 20px #ff1493, 0 0 30px #ff1493;
+}
+
+/* Box Glow Effects */
+.box-glow-gold {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.box-glow-red {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1);
+}
+
+.box-glow-pink {
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.3), inset 0 0 20px rgba(255, 20, 147, 0.1);
+}
+
+/* Animations */
+@keyframes pulse-gold {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+  }
+}
+
+@keyframes pulse-red {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.8);
+  }
+}
+
+@keyframes pulse-pink {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 20, 147, 0.8);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+.animate-pulse-red {
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+.animate-pulse-pink {
+  animation: pulse-pink 2.5s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+/* Grid Background */
+.grid-bg {
+  background-image: linear-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-gold {
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+}
+
+.bg-gradient-red {
+  background: linear-gradient(135deg, #ff6b35, #dc143c);
+}
+
+.bg-gradient-pink {
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+}
+
+/* Text Gradients */
+.text-gradient-gold {
+  background: linear-gradient(45deg, #ffd700, #ffb347);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-red {
+  background: linear-gradient(45deg, #ff6b35, #dc143c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-pink {
+  background: linear-gradient(45deg, #ff1493, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Color Classes */
+.text-gold {
+  color: #ffd700;
+}
+
+.text-red {
+  color: #ff6b35;
+}
+
+.text-pink {
+  color: #ff1493;
+}
+
+.bg-gold {
+  background-color: #ffd700;
+}
+
+.bg-red {
+  background-color: #ff6b35;
+}
+
+.bg-pink {
+  background-color: #ff1493;
+}
+
+.border-gold {
+  border-color: #ffd700;
+}
+
+.border-red {
+  border-color: #ff6b35;
+}
+
+.border-pink {
+  border-color: #ff1493;
+}
+
+/* Hover Effects */
+.hover-glow:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.hover-glow-gold:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+.hover-glow-red:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+}
+
+.hover-glow-pink:hover {
+  box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+}
+
+/* Professional Transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow,
+    transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Focus Styles */
+.focus-visible\:ring-1:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px #ffd700;
+}
+
+/* Status Colors */
+.text-green-300 {
+  color: #86efac;
+}
+.text-green-400 {
+  color: #4ade80;
+}
+.text-green-500 {
+  color: #22c55e;
+}
+.bg-green-500 {
+  background-color: #22c55e;
+}
+.bg-green-900 {
+  background-color: #14532d;
+}
+.border-green-500 {
+  border-color: #22c55e;
+}
+
+.text-yellow-300 {
+  color: #fde047;
+}
+.text-yellow-500 {
+  color: #eab308;
+}
+.bg-yellow-900 {
+  background-color: #713f12;
+}
+.border-yellow-500 {
+  border-color: #eab308;
+}
+
+.text-red-300 {
+  color: #fca5a5;
+}
+.text-red-400 {
+  color: #f87171;
+}
+.text-red-500 {
+  color: #ef4444;
+}
+.text-red-600 {
+  color: #dc2626;
+}
+.text-red-700 {
+  color: #b91c1c;
+}
+.bg-red-600 {
+  background-color: #dc2626;
+}
+.bg-red-700 {
+  background-color: #b91c1c;
+}
+.bg-red-900 {
+  background-color: #7f1d1d;
+}
+.border-red-500 {
+  border-color: #ef4444;
+}
+
+.text-blue-400 {
+  color: #60a5fa;
+}
+.bg-blue-900 {
+  background-color: #1e3a8a;
+}
+.border-blue-500 {
+  border-color: #3b82f6;
+}
+
+.text-gray-300 {
+  color: #d1d5db;
+}
+.text-gray-500 {
+  color: #6b7280;
+}
+.bg-gray-500 {
+  background-color: #6b7280;
+}
+.bg-gray-800 {
+  background-color: #1f2937;
+}
+.bg-gray-900 {
+  background-color: #111827;
+}
+.border-gray-600 {
+  border-color: #4b5563;
+}
+
+/* Backdrop Blur */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* Shadow Utilities */
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+/* Mobile Responsive Utilities */
+@media (max-width: 767px) {
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-full {
+    width: 100% !important;
+  }
+
+  .mobile-text-sm {
+    font-size: 0.875rem !important;
+  }
+
+  .mobile-p-2 {
+    padding: 0.5rem !important;
+  }
+
+  .mobile-gap-2 {
+    gap: 0.5rem !important;
+  }
+}
+
+/* Touch-friendly buttons on mobile */
+@media (max-width: 767px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  input,
+  select {
+    min-height: 44px;
+  }
+}
+
+/* Loading States */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* High DPI Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glow-gold {
+    text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700, 0 0 15px #ffd700;
+  }
+
+  .glow-red {
+    text-shadow: 0 0 5px #ff6b35, 0 0 10px #ff6b35, 0 0 15px #ff6b35;
+  }
+
+  .glow-pink {
+    text-shadow: 0 0 5px #ff1493, 0 0 10px #ff1493, 0 0 15px #ff1493;
+  }
+}
